@@ -14,8 +14,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AcademiaBromus.Data.NorthwindContext>(
     options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("NorthwindDB"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Northwind"));
     });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: "AllowOrigin", builder =>
+        {
+            builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        });
+});
+
 
 var app = builder.Build();
 
