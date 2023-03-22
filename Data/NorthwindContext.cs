@@ -24,6 +24,24 @@ public partial class NorthwindContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+
+        /*
+         [
+{ "customerId": "ANATO",
+    "companyName": "Ana Consultorio",
+    "contactName": "Ana Rodriguez",
+    "contactTitle": "Dueño",
+    "address": "Avda. de la Constitución 15562",
+    "city": "Tecka",
+    "region": null,
+    "postalCode": "9500",
+    "country": "Argentina",
+    "phone": "(2945) 45-6892",
+    "fax": "(2945) 45-6893"
+}
+]
+         */
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasIndex(e => e.City, "City");
@@ -49,6 +67,7 @@ public partial class NorthwindContext : DbContext
             entity.Property(e => e.PostalCode).HasMaxLength(10);
             entity.Property(e => e.Region).HasMaxLength(15);
         });
+
 
         modelBuilder.Entity<Shipper>(entity =>
         {
