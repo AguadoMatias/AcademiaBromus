@@ -13,7 +13,7 @@ namespace AcademiaBromus.DAOs
         // UPDATE
         Task<Employee?> UpdateEmployee(int id, Employee employee);
 
-        // CREATE
+        // INSERT
         Task<Employee?> InsertEmployee(Employee employee);
 
         // DELETE
