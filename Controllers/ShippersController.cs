@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademiaBromus.Data;
 using AcademiaBromus.Models;
+using AcademiaBromus.Services.ShipperService;
 
 namespace AcademiaBromus.Controllers
 {
@@ -14,32 +15,35 @@ namespace AcademiaBromus.Controllers
     [ApiController]
     public class ShippersController : ControllerBase
     {
-        private readonly NorthwindContext _context;
+        // Define una propiedad solo lectura de la dependencia IShipperService
+        private readonly IShipperService _shipperService;
 
-        public ShippersController(NorthwindContext context)
+        // Inyecta la dependencia de IShipperService y se la asigna a la propiedad antes creada
+        public ShippersController(IShipperService shipperService)
         {
-            _context = context;
+            _shipperService = shipperService;
         }
 
         // GET: api/Shippers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Shipper>>> GetShippers()
+        public async Task<IActionResult> GetShippers()
         {
-            return await _context.Shippers.ToListAsync();
+            var shippers = await _shipperService.ReadShippers();
+            return Ok(shippers);
         }
 
         // GET: api/Shippers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Shipper>> GetShipper(int id)
+        public async Task<IActionResult> GetShipper(int id)
         {
-            var shipper = await _context.Shippers.FindAsync(id);
+            var shipper = await _shipperService.ReadShipper(id);
 
             if (shipper == null)
             {
                 return NotFound();
             }
 
-            return shipper;
+            return Ok(shipper);
         }
 
         // PUT: api/Shippers/5
@@ -51,58 +55,38 @@ namespace AcademiaBromus.Controllers
             {
                 return BadRequest();
             }
+            var shippers = await _shipperService.UpdateShipper(id, shipper);           
 
-            _context.Entry(shipper).State = EntityState.Modified;
-
-            try
+            if (shippers == null)
             {
-                await _context.SaveChangesAsync();
+                return NoContent();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ShipperExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            return Ok(shippers);
 
-            return NoContent();
         }
 
         // POST: api/Shippers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Shipper>> PostShipper(Shipper shipper)
+        public async Task<IActionResult> PostShipper(Shipper shipper)
         {
-            _context.Shippers.Add(shipper);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetShipper", new { id = shipper.ShipperId }, shipper);
+            var shippers = await _shipperService.CreateShipper(shipper);
+            if (shippers == null)
+            {
+                return NoContent();
+            }
+            return Ok(shippers);
         }
 
         // DELETE: api/Shippers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteShipper(int id)
         {
-            var shipper = await _context.Shippers.FindAsync(id);
-            if (shipper == null)
-            {
-                return NotFound();
-            }
-
-            _context.Shippers.Remove(shipper);
-            await _context.SaveChangesAsync();
-
+            await _shipperService.DeleteShipper(id);            
             return NoContent();
+            
         }
 
-        private bool ShipperExists(int id)
-        {
-            return _context.Shippers.Any(e => e.ShipperId == id);
-        }
+        
     }
 }
