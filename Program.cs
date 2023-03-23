@@ -1,5 +1,8 @@
 global using AcademiaBromus.Models;
+using AcademiaBromus.DAOs;
+using AcademiaBromus.Services.ShipperService;
 using Microsoft.EntityFrameworkCore;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +20,7 @@ builder.Services.AddDbContext<AcademiaBromus.Data.NorthwindContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString("Northwind"));
     });
 
+<<<<<<< HEAD
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
@@ -26,6 +30,12 @@ builder.Services.AddCors(options =>
         });
 });
 
+=======
+
+// Define la implementacion que se debe tomar para las Interfaces 
+builder.Services.AddScoped<IShipperService, ShipperService>();
+builder.Services.AddScoped<IShipperDAO, ShipperDAO>();
+>>>>>>> master
 
 var app = builder.Build();
 
