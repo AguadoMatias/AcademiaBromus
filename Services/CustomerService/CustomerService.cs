@@ -7,12 +7,11 @@ namespace AcademiaBromus.Services.CustomerService
     {
         private readonly ICustomerDAO _icustomerDAO;
 
-        // LA CLASE SHIPPERSERVICE INYECTA LA DEPENDENCIA DE LA INTERFACE iDAO MEDIANTE EL USO DE UNA PROPIEDAD;
         public CustomerService(ICustomerDAO icustomerDAO)
         {
             _icustomerDAO = icustomerDAO;
         }
-
+        
         Task ICustomerService.DeleteCustomer(string id)
         {
             return _icustomerDAO.DeleteCustomer(id);

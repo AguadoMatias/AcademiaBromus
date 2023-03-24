@@ -22,6 +22,8 @@ namespace AcademiaBromus.DAOs
 
         public async Task<Customer?> SelectCustomer(string id)
         {
+
+
             var customer = await _context.Customers.FindAsync(id);
             return customer;
         }
