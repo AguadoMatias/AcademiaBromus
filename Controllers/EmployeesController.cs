@@ -50,11 +50,11 @@ namespace AcademiaBromus.Controllers
 
             var updatedEmployee = await _employeeService.UpdateEmployee(id, employee);
 
-            if (updatedEmployee != null)
+            if (updatedEmployee == null)
             {
-                return Ok();
+                return NotFound();
             }
-            return NotFound();
+            return Ok();
         }
 
         // POST: api/Employees
@@ -62,11 +62,11 @@ namespace AcademiaBromus.Controllers
         public async Task<IActionResult> PostEmployee(Employee employee)
         {
             var newEmployee = await _employeeService.CreateEmployee(employee);
-            if (newEmployee != null)
+            if (newEmployee == null)
             {
-                return Ok();
+                return BadRequest();
             }
-            return BadRequest();
+            return Ok();
         }
 
         // DELETE: api/Employees/5
@@ -74,11 +74,11 @@ namespace AcademiaBromus.Controllers
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             var deletedEmployee = await _employeeService.DeleteEmployee(id);
-            if (deletedEmployee != null)
+            if (deletedEmployee == null)
             {
-                return NoContent();
+                return NotFound();
             }
-            return NotFound();
+            return NoContent();
         }
     }
 }
