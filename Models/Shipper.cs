@@ -10,5 +10,5 @@ public partial class Shipper
     public string CompanyName { get; set; } = null!;
 
     public string? Phone { get; set; }
-    
+
 }

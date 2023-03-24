@@ -18,7 +18,7 @@ public partial class NorthwindContext : DbContext
 
 <<<<<<< HEAD
     public virtual DbSet<Customer> Customers { get; set; }
-    public virtual DbSet<Shipper> Shippers{ get; set; }
+    public virtual DbSet<Customer> Shippers{ get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Northwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False;");
@@ -64,7 +64,7 @@ public partial class NorthwindContext : DbContext
         });
 
 
-        modelBuilder.Entity<Shipper>(entity =>
+        modelBuilder.Entity<Customer>(entity =>
         {
             entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
             entity.Property(e => e.CompanyName).HasMaxLength(40);
@@ -72,7 +72,7 @@ public partial class NorthwindContext : DbContext
         });
 
 <<<<<<< HEAD
-        modelBuilder.Entity<Shipper>(entity =>
+        modelBuilder.Entity<Customer>(entity =>
         {
             entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
             entity.Property(e => e.CompanyName).HasMaxLength(40);

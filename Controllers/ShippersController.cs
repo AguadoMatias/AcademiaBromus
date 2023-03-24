@@ -49,7 +49,7 @@ namespace AcademiaBromus.Controllers
         // PUT: api/Shippers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutShipper(int id, Shipper shipper)
+        public async Task<IActionResult> PutShipper(int id, Customer shipper)
         {
             if (id != shipper.ShipperId)
             {
@@ -68,7 +68,7 @@ namespace AcademiaBromus.Controllers
         // POST: api/Shippers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<IActionResult> PostShipper(Shipper shipper)
+        public async Task<IActionResult> PostShipper(Customer shipper)
         {
             var shippers = await _shipperService.CreateShipper(shipper);
             if (shippers == null)
