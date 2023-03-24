@@ -1,7 +1,7 @@
 ﻿using AcademiaBromus.DAOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AcademiaBromus.Services.ShipperService
+namespace AcademiaBromus.Services.CustomerService
 {
     public class CustomerService : ICustomerService
     {
@@ -28,12 +28,12 @@ namespace AcademiaBromus.Services.ShipperService
             return await _icustomerDAO.SelectCustomer();
         }
 
-        async Task<List<Customer>> ICustomerService.CreateCustomer(Customer customer)
+        async Task<Customer> ICustomerService.CreateCustomer(Customer customer)
         {
             return await _icustomerDAO.InsertCustomer(customer);
         }
 
-        async Task<List<Customer>> ICustomerService.UpdateCustomer(string id, Customer customer)
+        async Task<Customer> ICustomerService.UpdateCustomer(string id, Customer customer)
         {
             return await _icustomerDAO.UpdateCustomer(id, customer);
         }

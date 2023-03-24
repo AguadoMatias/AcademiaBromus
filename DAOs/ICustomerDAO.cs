@@ -9,10 +9,10 @@ public interface ICustomerDAO
     public Task<Customer?> SelectCustomer(string id);
 
 
-    public Task<List<Customer>?> UpdateCustomer(string id, Customer customer);
+    public Task<Customer>? UpdateCustomer(string id, Customer customer);
 
 
-    public Task<List<Customer>> InsertCustomer(Customer customer);
+    public Task<Customer> InsertCustomer(Customer customer);
 
 
     public Task DeleteCustomer(string id);

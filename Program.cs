@@ -1,5 +1,6 @@
 global using AcademiaBromus.Models;
 using AcademiaBromus.DAOs;
+using AcademiaBromus.Services.CustomerService;
 using AcademiaBromus.Services.ShipperService;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,10 @@ builder.Services.AddCors(options =>
 // Define la implementacion que se debe tomar para las Interfaces 
 builder.Services.AddScoped<IShipperService, ShipperService>();
 builder.Services.AddScoped<IShipperDAO, ShipperDAO>();
+
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerDAO, CustomerDao>();
+
 
 var app = builder.Build();
 

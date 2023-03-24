@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AcademiaBromus.Data;
 using AcademiaBromus.Models;
+using AcademiaBromus.Services.CustomerService;
 
 namespace AcademiaBromus.Controllers
 {
@@ -14,40 +15,35 @@ namespace AcademiaBromus.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly NorthwindContext _context;
+        private readonly ICustomerService _customerService;
 
-        public CustomersController(NorthwindContext context)
+        public CustomersController(ICustomerService customerService)
         {
-            _context = context;
+            _customerService = customerService;
         }
 
         // GET: api/Customers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-          if (_context.Customers == null)
-          {
-              return NotFound();
-          }
-            return await _context.Customers.ToListAsync();
+            var customer = await _customerService.ReadCustomer();
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return Ok(customer);
         }
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(string id)
         {
-          if (_context.Customers == null)
-          {
-              return NotFound();
-          }
-            var customer = await _context.Customers.FindAsync(id);
-
+            var customer = await _customerService.ReadCustomer(id);
             if (customer == null)
             {
                 return NotFound();
             }
-
-            return customer;
+            return Ok(customer);
         }
 
         // PUT: api/Customers/5
@@ -60,82 +56,39 @@ namespace AcademiaBromus.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
-
-            try
+            var updateCustomer = await _customerService.UpdateCustomer(id, customer);
+            if (updateCustomer == null)
             {
-                await _context.SaveChangesAsync();
+                return NoContent();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-
             return Ok();
         }
 
-        }
+
 
         // POST: api/Customers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
-          if (_context.Customers == null)
-          {
-              return Problem("Entity set 'NorthwindContext.Customers'  is null.");
-          }
-            _context.Customers.Add(customer);
-            try
+            var customers = await _customerService.CreateCustomer(customer);
+            if (customers == null)
             {
-                await _context.SaveChangesAsync();
+                return BadRequest();
             }
-            catch (DbUpdateException)
-            {
-                if (CustomerExists(customer.CustomerId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetCustomer", new { id = customer.CustomerId }, customer);
+            return Ok(customers);
         }
 
         // DELETE: api/Customers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(string id)
         {
-            if (_context.Customers == null)
-            {
-                return NotFound();
-            }
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
-
+           //Si no encuentra ese id como lo puedo complementar desde la parte logica?
+            await _customerService.DeleteCustomer(id);
             return NoContent();
+
         }
 
-        private bool CustomerExists(string id)
-        {
-            return (_context.Customers?.Any(e => e.CustomerId == id)).GetValueOrDefault();
-        }
+
     }
 }

@@ -18,12 +18,12 @@ namespace AcademiaBromus.Services.ShipperService
             return _ishipperDAO.DeleteShipper(id);
         }
 
-        async Task<Customer> IShipperService.ReadShipper(int id)
+        async Task<Shipper> IShipperService.ReadShipper(int id)
         {
             return await _ishipperDAO.SelectShipper(id);
         }
 
-        async Task<IEnumerable<Customer>> IShipperService.ReadShippers()
+        async Task<IEnumerable<Shipper>> IShipperService.ReadShippers()
         {
             return await _ishipperDAO.SelectShippers();
         }
@@ -33,7 +33,7 @@ namespace AcademiaBromus.Services.ShipperService
             return await _ishipperDAO.InsertShipper(shipper);
         }
 
-        async Task<List<Customer>> IShipperService.UpdateShipper(int id, Shipper shipper)
+        async Task<List<Shipper>> IShipperService.UpdateShipper(int id, Shipper shipper)
         {
             return await _ishipperDAO.UpdateShipper(id, shipper);
         }

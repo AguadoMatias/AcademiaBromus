@@ -14,19 +14,19 @@ namespace AcademiaBromus.DAOs
             _context = context;
         }
 
-        public async Task<IEnumerable<Customer>> SelectShippers()
+        public async Task<IEnumerable<Shipper>> SelectShippers()
         {
             var shippers = await _context.Shippers.ToListAsync();
             return shippers;
         }
 
-        public async Task<Customer?> SelectShipper(int id)
+        public async Task<Shipper?> SelectShipper(int id)
         {
             var shipper = await _context.Shippers.FindAsync(id);          
             return shipper;
         }
 
-        public async Task<List<Customer>?> UpdateShipper(int id, Customer shipper)
+        public async Task<List<Shipper>?> UpdateShipper(int id, Shipper shipper)
         {
             _context.Entry(shipper).State = EntityState.Modified;
             try
@@ -48,7 +48,7 @@ namespace AcademiaBromus.DAOs
             return await _context.Shippers.ToListAsync();
         }
 
-        public async Task<List<Customer>> InsertShipper(Customer shipper)
+        public async Task<List<Shipper>> InsertShipper(Shipper shipper)
         {
             _context.Shippers.Add(shipper);
             await _context.SaveChangesAsync();

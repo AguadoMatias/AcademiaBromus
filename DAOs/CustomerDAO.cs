@@ -26,7 +26,7 @@ namespace AcademiaBromus.DAOs
             return customer;
         }
 
-        public async Task<List<Customer>?> UpdateCustomer(string id, Customer customer)
+        public async Task<Customer>? UpdateCustomer(string id, Customer customer)
         {
             _context.Entry(customer).State = EntityState.Modified;
             try
@@ -45,14 +45,14 @@ namespace AcademiaBromus.DAOs
                 }
             }
 
-            return await _context.Customers.ToListAsync();
+            return customer;
         }
 
-        public async Task<List<Customer>> InsertCustomer(Customer customer)
+        public async Task<Customer> InsertCustomer(Customer customer)
         {
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
-            return await _context.Customers.ToListAsync();
+            return customer;
         }
 
         public async Task DeleteCustomer(string id)
