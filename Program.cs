@@ -5,9 +5,6 @@ using AcademiaBromus.Services.ShipperService;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
-
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -28,7 +25,6 @@ builder.Services.AddDbContext<AcademiaBromus.Data.NorthwindContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString("NorthwindDB"));
     });
 
-
 // Define la implementacion que se debe tomar para las Interfaces 
 builder.Services.AddScoped<IShipperService, ShipperService>();
 builder.Services.AddScoped<IShipperDAO, ShipperDAO>();
@@ -45,9 +41,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
