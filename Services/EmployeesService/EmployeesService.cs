@@ -1,6 +1,4 @@
 ﻿using AcademiaBromus.DAOs;
-using AcademiaBromus.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AcademiaBromus.Services.Employees
 {
@@ -37,7 +35,5 @@ namespace AcademiaBromus.Services.Employees
         {
             return await _employeesDAO.DeleteEmployee(id);
         }
-
-
     }
 }
