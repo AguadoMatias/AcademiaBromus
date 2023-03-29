@@ -18,40 +18,35 @@ namespace AcademiaBromus.DAOs
             _context = context;
         }
 
-        public async Task<IEnumerable<Employee>> SelectEmployees()
+        public async Task<IEnumerable<Employee>> GetEmployees()
         {
             return await _context.Employees.ToListAsync();
         }
 
-        public async Task<Employee?> SelectEmployee(int id)
+        public async Task<Employee?> GetEmployee(int id)
         {
             return await _context.Employees.FindAsync(id);
         }
 
-        public async Task<Employee?> UpdateEmployee(int id, Employee employee)
+        public async Task<Employee?> SetEmployee(int id, Employee employee)
         {
-
-            _context.Entry(employee).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeExists(id))
+            if (EmployeeExists(id)) {
+                _context.Entry(employee).State = EntityState.Modified;
+                try
                 {
-                    return null;
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
                     throw;
                 }
-            }
-            return employee;
+                return employee;
+            } else {
+                return null;
+            }          
         }
 
-        public async Task<Employee?> InsertEmployee(Employee employee)
+        public async Task<Employee?> CreateEmployee(Employee employee)
         {
             if (_context.Employees == null)
             {
@@ -65,12 +60,8 @@ namespace AcademiaBromus.DAOs
 
         public async Task<Employee?> DeleteEmployee(int id)
         {
-            if (_context.Employees == null)
-            {
-                return null;
-            }
             var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            if (_context.Employees == null || employee == null)
             {
                 return null;
             }
