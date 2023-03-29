@@ -5,10 +5,7 @@ namespace AcademiaBromus.DAOs
 {
     public class CustomerDao : ICustomerDAO
     {
-        // SOLO EL DAO SERA RESPONSABLE DE INTERMEDIAR CON EL CONTEXTO DE LA BASE DE DATOS PARA EJECUTAR LAS OPERACIONES CRUD
-        // POR ESO SE GENERA ACA LA PROPIEDAD SOLO LECTURA DE NORTHWIND CONTEXT
         private readonly NorthwindContext _context;
-
         public CustomerDao(NorthwindContext context)
         {
             _context = context;
@@ -22,8 +19,6 @@ namespace AcademiaBromus.DAOs
 
         public async Task<Customer?> SelectCustomer(string id)
         {
-
-
             var customer = await _context.Customers.FindAsync(id);
             return customer;
         }
@@ -31,22 +26,16 @@ namespace AcademiaBromus.DAOs
         public async Task<Customer>? UpdateCustomer(string id, Customer customer)
         {
             _context.Entry(customer).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
+            if (!CustomerExists(id)){
+                try
                 {
-                    return null;
-                }
-                else
+                    await _context.SaveChangesAsync();
+                } 
+                catch (DbUpdateConcurrencyException e)
                 {
-                    throw;
+                    Console.WriteLine(value: e.Message);
                 }
             }
-
             return customer;
         }
 

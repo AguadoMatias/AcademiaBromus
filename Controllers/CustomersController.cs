@@ -22,7 +22,6 @@ namespace AcademiaBromus.Controllers
             _customerService = customerService;
         }
 
-        // GET: api/Customers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
@@ -34,7 +33,6 @@ namespace AcademiaBromus.Controllers
             return Ok(customer);
         }
 
-        // GET: api/Customers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(string id)
         {
@@ -45,9 +43,7 @@ namespace AcademiaBromus.Controllers
             }
             return Ok(customer);
         }
-
-        // PUT: api/Customers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(string id, Customer customer)
         {
@@ -64,10 +60,6 @@ namespace AcademiaBromus.Controllers
             return Ok();
         }
 
-
-
-        // POST: api/Customers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
@@ -79,11 +71,9 @@ namespace AcademiaBromus.Controllers
             return Ok(customers);
         }
 
-        // DELETE: api/Customers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(string id)
         {
-           //Si no encuentra ese id como lo puedo complementar desde la parte logica?
             await _customerService.DeleteCustomer(id);
             return NoContent();
 
