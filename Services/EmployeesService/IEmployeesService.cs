@@ -5,13 +5,13 @@ namespace AcademiaBromus.Services.Employees
     public interface IEmployeesService
     {
         // READ
-        public Task<IEnumerable<Employee>> ReadEmployees();
+        public Task<IEnumerable<Employee>> GetEmployees();
 
         // READ(id)
-        public Task<Employee?> ReadEmployee(int id);
+        public Task<Employee?> GetEmployee(int id);
 
         // UPDATE
-        public Task<Employee?> UpdateEmployee(int id, Employee employee);
+        public Task<Employee?> SetEmployee(int id, Employee employee);
 
         // CREATE
         public Task<Employee?> CreateEmployee(Employee employee);

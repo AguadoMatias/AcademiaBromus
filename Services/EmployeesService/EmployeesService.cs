@@ -11,24 +11,24 @@ namespace AcademiaBromus.Services.Employees
             _employeesDAO = dao;
         }
 
-        public async Task<IEnumerable<Employee>> ReadEmployees()
+        public async Task<IEnumerable<Employee>> GetEmployees()
         {
-            return await _employeesDAO.SelectEmployees();
+            return await _employeesDAO.GetEmployees();
         }
 
-        public async Task<Employee?> ReadEmployee(int id)
+        public async Task<Employee?> GetEmployee(int id)
         {
-            return await _employeesDAO.SelectEmployee(id);
+            return await _employeesDAO.GetEmployee(id);
         }
 
-        public async Task<Employee?> UpdateEmployee(int id, Employee employee)
+        public async Task<Employee?> SetEmployee(int id, Employee employee)
         {
-            return await _employeesDAO.UpdateEmployee(id, employee);
+            return await _employeesDAO.SetEmployee(id, employee);
         }
 
         public async Task<Employee?> CreateEmployee(Employee employee)
         {
-            return await _employeesDAO.InsertEmployee(employee);
+            return await _employeesDAO.CreateEmployee(employee);
         }
 
         public async Task<Employee?> DeleteEmployee(int id)
