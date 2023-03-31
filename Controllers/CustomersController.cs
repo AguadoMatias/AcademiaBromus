@@ -15,17 +15,17 @@ namespace AcademiaBromus.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly ICustomerService _customerService;
+        private readonly ICustomerService _CustomerService;
 
         public CustomersController(ICustomerService customerService)
         {
-            _customerService = customerService;
+            _CustomerService = customerService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            var customer = await _customerService.ReadCustomer();
+            var customer = await _CustomerService.GetCustomers();
             if (customer == null)
             {
                 return NotFound();
@@ -36,7 +36,7 @@ namespace AcademiaBromus.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(string id)
         {
-            var customer = await _customerService.ReadCustomer(id);
+            var customer = await _CustomerService.GetCustomer(id);
             if (customer == null)
             {
                 return NotFound();
@@ -44,26 +44,10 @@ namespace AcademiaBromus.Controllers
             return Ok(customer);
         }
         
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(string id, Customer customer)
-        {
-            if (id != customer.CustomerId)
-            {
-                return BadRequest();
-            }
-
-            var updateCustomer = await _customerService.UpdateCustomer(id, customer);
-            if (updateCustomer == null)
-            {
-                return NoContent();
-            }
-            return Ok();
-        }
-
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<ActionResult<Customer>> SetCustomer(Customer customer)
         {
-            var customers = await _customerService.CreateCustomer(customer);
+            var customers = await _CustomerService.SetCustomer(customer);
             if (customers == null)
             {
                 return BadRequest();
@@ -71,14 +55,28 @@ namespace AcademiaBromus.Controllers
             return Ok(customers);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCustomer(string id, Customer customer)
+        {
+            if (id != customer.CustomerId)
+            {
+                return BadRequest();
+            }
+
+            var updateCustomer = await _CustomerService.UpdateCustomer(id, customer);
+            if (updateCustomer == null)
+            {
+                return NoContent();
+            }
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(string id)
         {
-            await _customerService.DeleteCustomer(id);
+            await _CustomerService.DeleteCustomer(id);
             return NoContent();
 
         }
-
-
     }
 }

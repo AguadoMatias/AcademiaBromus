@@ -11,18 +11,22 @@ namespace AcademiaBromus.DAOs
             _context = context;
         }
 
-        public async Task<IEnumerable<Customer>> SelectCustomer()
+        public async Task<IEnumerable<Customer>> GetCustomers()
         {
             var customers = await _context.Customers.ToListAsync();
             return customers;
         }
-
-        public async Task<Customer?> SelectCustomer(string id)
+        public async Task<Customer?> GetCustomer(string id)
         {
             var customer = await _context.Customers.FindAsync(id);
             return customer;
         }
-
+        public async Task<Customer> SetCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
+            return customer;
+        }
         public async Task<Customer>? UpdateCustomer(string id, Customer customer)
         {
             _context.Entry(customer).State = EntityState.Modified;
@@ -38,14 +42,6 @@ namespace AcademiaBromus.DAOs
             }
             return customer;
         }
-
-        public async Task<Customer> InsertCustomer(Customer customer)
-        {
-            _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
-            return customer;
-        }
-
         public async Task DeleteCustomer(string id)
         {
             var customer = await _context.Customers.FindAsync(id);

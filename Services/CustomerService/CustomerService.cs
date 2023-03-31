@@ -5,36 +5,32 @@ namespace AcademiaBromus.Services.CustomerService
 {
     public class CustomerService : ICustomerService
     {
-        private readonly ICustomerDAO _icustomerDAO;
+        private readonly ICustomerDAO _iCustomerDAO;
 
         public CustomerService(ICustomerDAO icustomerDAO)
         {
-            _icustomerDAO = icustomerDAO;
-        }
-        
-        Task ICustomerService.DeleteCustomer(string id)
-        {
-            return _icustomerDAO.DeleteCustomer(id);
+            _iCustomerDAO = icustomerDAO;
         }
 
-        async Task<Customer> ICustomerService.ReadCustomer(string id)
+        async Task<Customer> ICustomerService.GetCustomer(string id)
         {
-            return await _icustomerDAO.SelectCustomer(id);
+            return await _iCustomerDAO.GetCustomer(id);
         }
-
-        async Task<IEnumerable<Customer>> ICustomerService.ReadCustomer()
+        async Task<IEnumerable<Customer>> ICustomerService.GetCustomers()
         {
-            return await _icustomerDAO.SelectCustomer();
+            return await _iCustomerDAO.GetCustomers();
         }
-
-        async Task<Customer> ICustomerService.CreateCustomer(Customer customer)
+        async Task<Customer> ICustomerService.SetCustomer(Customer customer)
         {
-            return await _icustomerDAO.InsertCustomer(customer);
+            return await _iCustomerDAO.SetCustomer(customer);
         }
-
         async Task<Customer> ICustomerService.UpdateCustomer(string id, Customer customer)
         {
-            return await _icustomerDAO.UpdateCustomer(id, customer);
+            return await _iCustomerDAO.UpdateCustomer(id, customer);
+        }
+        Task ICustomerService.DeleteCustomer(string id)
+        {
+            return _iCustomerDAO.DeleteCustomer(id);
         }
     }
 }

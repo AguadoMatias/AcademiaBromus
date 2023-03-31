@@ -1,7 +1,6 @@
 global using AcademiaBromus.Models;
 using AcademiaBromus.DAOs;
 using AcademiaBromus.Services.CustomerService;
-using AcademiaBromus.Services.ShipperService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
