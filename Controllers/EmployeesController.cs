@@ -55,12 +55,12 @@ namespace AcademiaBromus.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> SetEmployee(int id, Employee employee)
         {
+            if (id != employee.EmployeeId)
+            {
+                return BadRequest();
+            }
             try
             {
-                if (id != employee.EmployeeId)
-                {
-                    return BadRequest();
-                }
                 var updatedEmployee = await _employeeService.SetEmployee(id, employee);
 
                 if (updatedEmployee == null)
