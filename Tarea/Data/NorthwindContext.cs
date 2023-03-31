@@ -7,29 +7,15 @@ namespace Tarea.Data;
 
 public partial class NorthwindContext : DbContext
 {
-    public NorthwindContext()
-    {
-    }
+    public NorthwindContext() { }
 
     public NorthwindContext(DbContextOptions<NorthwindContext> options)
-        : base(options)
-    {
-    }
-
-    public virtual DbSet<Shipper> Shippers { get; set; }
+        : base(options) { }
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
- 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Shipper>(entity =>
-        {
-            entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
-            entity.Property(e => e.CompanyName).HasMaxLength(40);
-            entity.Property(e => e.Phone).HasMaxLength(24);
-        });
-
         modelBuilder.Entity<Supplier>(entity =>
         {
             entity.HasIndex(e => e.CompanyName, "CompanyName");

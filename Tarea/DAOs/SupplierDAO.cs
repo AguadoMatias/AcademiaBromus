@@ -4,75 +4,70 @@ using Tarea.Data;
 
 namespace Tarea.DAOs
 {
-    public class SupplierDAO : ISupplierDAO 
+    public class SupplierDAO : ISupplierDAO
     {
-      
         private readonly NorthwindContext _context;
 
-        //Constructor
         public SupplierDAO(NorthwindContext context)
         {
             _context = context;
         }
-        //GET
-        public async Task<IEnumerable<Supplier>> SelectSuppliers()
+
+        public async Task<IEnumerable<Supplier>> GetSuppliers()
         {
             var suppliers = await _context.Suppliers.ToListAsync();
+
             return suppliers;
         }
-        //GET BY ID
-        public async Task<Supplier?> SelectSupplier(int id)
-        {
 
+        public async Task<Supplier?> GetSupplier(int id)
+        {
             var supplier = await _context.Suppliers.FindAsync(id);
- 
+
             return supplier;
         }
-        //UPDATE
-        public async Task<Supplier>? UpdateSupplier(int id, Supplier supplier)
+
+        public async Task<Supplier>? PutSupplier(int id, Supplier supplier)
         {
             _context.Entry(supplier).State = EntityState.Modified;
-            try
+            
+            if(!SupplierExists(id)) 
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SupplierExists(id))
+                try
                 {
-                    return null;
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException s)
                 {
-                    throw;
+                    Console.WriteLine(value: s.Message);
                 }
             }
-
             return supplier;
         }
-        //PUT
-        public async Task<List<Supplier>> InsertSupplier(Supplier supplier)
+
+        public async Task<List<Supplier>> PostSupplier(Supplier supplier)
         {
             _context.Suppliers.Add(supplier);
             await _context.SaveChangesAsync();
             return await _context.Suppliers.ToListAsync();
         }
-        //DELETE
-        public async Task DeleteSupplier(int id)
+
+        public async Task<Supplier?> DeleteSupplier(int id)
         {
             var supplier = await _context.Suppliers.FindAsync(id);
-            if (supplier != null)
+            if (supplier == null || _context.Suppliers == null)
             {
-                _context.Suppliers.Remove(supplier);
-                await _context.SaveChangesAsync();
+                return null;
             }
+            _context.Suppliers.Remove(supplier);
+            await _context.SaveChangesAsync();
 
+            return supplier;
         }
 
         private bool SupplierExists(int id)
         {
             return _context.Suppliers.Any(e => e.SupplierId == id);
-        } }
+        }
+    }
 }
-
-

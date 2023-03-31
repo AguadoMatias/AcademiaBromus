@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Tarea.Data;
-using Tarea.Models;
 using Tarea.Services.SupplierService;
 
 namespace Tarea.Controllers
@@ -22,73 +15,102 @@ namespace Tarea.Controllers
             _supplierService = supplierService;
         }
 
-        // GET: api/Suppliers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers()
         {
-
-            var suppliers = await _supplierService.ReadSuppliers();
-            if(suppliers == null)
+            try
             {
-                return NotFound();
+                var suppliers = await _supplierService.GetSuppliers();
+                if (suppliers == null)
+                {
+                    return NotFound();
+                }
+                return Ok(suppliers);
             }
-            return Ok(suppliers);
+            catch
+            {
+                return StatusCode(500);
+            }
         }
-        // GET: api/Supplier/5
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Supplier>> GetSupplier(int id)
         {
-            var supplier = await _supplierService.ReadSupplier(id);
-
-            if (supplier == null)
+            try
             {
-                return NotFound();
-            }
+                var supplier = await _supplierService.GetSupplier(id);
 
-            return Ok(supplier);
+                if (supplier == null)
+                {
+                    return NotFound();
+                }
+                return Ok(supplier);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
-        // PUT: api/Suppliers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSupplier(int id, Supplier supplier)
         {
-            if (id != supplier.SupplierId)
+            try
             {
-                return BadRequest();
-            }
-            var suppliers = await _supplierService.UpdateSupplier(id, supplier);
+                if (id != supplier.SupplierId)
+                {
+                    return BadRequest();
+                }
+                var supplierPut = await _supplierService.PutSupplier(id, supplier);
 
-            if (suppliers == null)
+                if (supplierPut == null)
+                {
+                    return NotFound();
+                }
+                return Ok(supplierPut);
+            }
+            catch
             {
-                return NoContent();
+                return StatusCode(500);
             }
-            return Ok(suppliers);
-
         }
 
-        // POST: api/Suppliers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Supplier>> PostSupplier(Supplier supplier)
         {
-            var suppliers = await _supplierService.CreateSupplier(supplier);
-            if (suppliers == null)
+            try
             {
-                return NoContent();
+                var supplierPost = await _supplierService.PostSupplier(supplier);
+
+                if (supplierPost == null)
+                {
+                    return BadRequest();
+                }
+                return StatusCode(201);
             }
-            return Ok(suppliers);
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
-        // DELETE: api/Suppliers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSupplier(int id)
         {
-            await _supplierService.DeleteSupplier(id);
-            return NoContent();
+            try
+            {
+                var supplierDelete = await _supplierService.DeleteSupplier(id);
 
+                if (supplierDelete == null)
+                {
+                    return NotFound();
+                }
+                return NoContent();
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
-
-       
     }
 }
