@@ -23,6 +23,19 @@ namespace AcademiaBromus.DAOs
         }
         public async Task<Customer> SetCustomer(Customer customer)
         {
+            // Genera un string aleatorio de 5 letras en mayúscula debido a la PK que tiene mi tabla
+            var random = new Random();
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var customerId = new string(
+                Enumerable.Repeat(chars, 5)
+                    .Select(s => s[random.Next(s.Length)])
+                    .ToArray());
+
+            // Asigna el customerId generado al objeto de Customer
+            customer.CustomerId = customerId;
+
+
+
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
             return customer;

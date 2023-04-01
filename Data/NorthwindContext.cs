@@ -23,14 +23,16 @@ public partial class NorthwindContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
+            entity.HasKey(e => e.CustomerId); // Configura CustomerId como clave primaria
+            entity.Property(e => e.CustomerId)
+                .ValueGeneratedOnAdd()
+                .IsRequired();
+
             entity.HasIndex(e => e.City, "City");
             entity.HasIndex(e => e.CompanyName, "CompanyName");
             entity.HasIndex(e => e.PostalCode, "PostalCode");
             entity.HasIndex(e => e.Region, "Region");
-            entity.Property(e => e.CustomerId)
-                .HasMaxLength(5)
-                .IsFixedLength()
-                .HasColumnName("CustomerID");
+            
             entity.Property(e => e.Address).HasMaxLength(60);
             entity.Property(e => e.City).HasMaxLength(15);
             entity.Property(e => e.CompanyName).HasMaxLength(40);
