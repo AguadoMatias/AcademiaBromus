@@ -1,7 +1,6 @@
 global using AcademiaBromus.Models;
 using AcademiaBromus.DAOs;
 using AcademiaBromus.Services.Employees;
-using AcademiaBromus.Services.ShipperService;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -34,8 +33,6 @@ builder.Services.AddCors(options =>
                       });
 });
 
-builder.Services.AddScoped<IShipperService, ShipperService>();
-builder.Services.AddScoped<IShipperDAO, ShipperDAO>();
 builder.Services.AddScoped<IEmployeesDAO, EmployeesDAO>();
 builder.Services.AddScoped<IEmployeesService, EmployeesService>();
 
