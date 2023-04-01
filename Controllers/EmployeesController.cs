@@ -61,7 +61,7 @@ namespace AcademiaBromus.Controllers
             }
             try
             {
-                var updatedEmployee = await _employeeService.SetEmployee(id, employee);
+                var updatedEmployee = await _employeeService.PutEmployee(id, employee);
 
                 if (updatedEmployee == null)
                 {
@@ -80,7 +80,7 @@ namespace AcademiaBromus.Controllers
         {
             try
             {
-                var newEmployee = await _employeeService.CreateEmployee(employee);
+                var newEmployee = await _employeeService.PostEmployee(employee);
                 if (newEmployee == null)
                 {
                     return BadRequest();

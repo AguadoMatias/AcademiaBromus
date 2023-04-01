@@ -28,7 +28,7 @@ namespace AcademiaBromus.DAOs
             return await _context.Employees.FindAsync(id);
         }
 
-        public async Task<Employee?> SetEmployee(int id, Employee employee)
+        public async Task<Employee?> PutEmployee(int id, Employee employee)
         {
             if (EmployeeExists(id)) {
                 _context.Entry(employee).State = EntityState.Modified;
@@ -46,7 +46,7 @@ namespace AcademiaBromus.DAOs
             }          
         }
 
-        public async Task<Employee?> CreateEmployee(Employee employee)
+        public async Task<Employee?> PostEmployee(Employee employee)
         {
             if (_context.Employees == null)
             {

@@ -8,9 +8,9 @@ namespace AcademiaBromus.DAOs
 
         Task<Employee?> GetEmployee(int id);
 
-        Task<Employee?> SetEmployee(int id, Employee employee);
+        Task<Employee?> PutEmployee(int id, Employee employee);
 
-        Task<Employee?> CreateEmployee(Employee employee);
+        Task<Employee?> PostEmployee(Employee employee);
 
         Task<Employee?> DeleteEmployee(int id);
     }
