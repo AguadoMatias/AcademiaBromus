@@ -15,39 +15,54 @@ namespace AcademiaBromus.Controllers
     [ApiController]
     public class ShippersController : ControllerBase
     {
-        // Define una propiedad solo lectura de la dependencia IShipperService
+        
         private readonly IShipperService _shipperService;
 
-        // Inyecta la dependencia de IShipperService y se la asigna a la propiedad antes creada
+        
         public ShippersController(IShipperService shipperService)
         {
             _shipperService = shipperService;
         }
 
-        // GET: api/Shippers
+        
         [HttpGet]
         public async Task<IActionResult> GetShippers()
         {
-            var shippers = await _shipperService.ReadShippers();
-            return Ok(shippers);
+            try
+            {
+                var shippers = await _shipperService.GetShippers();
+                return Ok(shippers);
+            }
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return BadRequest(message);
+
+            }
         }
 
-        // GET: api/Shippers/5
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetShipper(int id)
-        {
-            var shipper = await _shipperService.ReadShipper(id);
-
-            if (shipper == null)
+        {            
+            try
             {
-                return NotFound();
+                var shipper = await _shipperService.GetShipper(id);
+                if (shipper == null)
+                {
+                    return NotFound();
+                }
+                return Ok(shipper);
             }
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return BadRequest(message);
 
-            return Ok(shipper);
+            }
         }
 
-        // PUT: api/Shippers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutShipper(int id, Shipper shipper)
         {
@@ -55,36 +70,61 @@ namespace AcademiaBromus.Controllers
             {
                 return BadRequest();
             }
-            var shippers = await _shipperService.UpdateShipper(id, shipper);           
-
-            if (shippers == null)
+            try
             {
-                return NoContent();
+                var shippers = await _shipperService.PutShipper(id, shipper);
+                if (shippers == null)
+                {
+                    return NoContent();
+                }
+                return Ok(shippers);
             }
-            return Ok(shippers);
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return BadRequest(message);
+
+            }
 
         }
 
-        // POST: api/Shippers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
         [HttpPost]
         public async Task<IActionResult> PostShipper(Shipper shipper)
         {
-            var shippers = await _shipperService.CreateShipper(shipper);
-            if (shippers == null)
+            try
             {
-                return NoContent();
+                var shippers = await _shipperService.PostShipper(shipper);
+                if (shippers == null)
+                {
+                    return NoContent();
+                }
+                return Ok(shippers);
             }
-            return Ok(shippers);
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return BadRequest(message);
+
+            }
+
         }
 
-        // DELETE: api/Shippers/5
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteShipper(int id)
         {
-            await _shipperService.DeleteShipper(id);            
-            return NoContent();
-            
+            try
+            {
+                await _shipperService.DeleteShipper(id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return BadRequest(message);
+
+            }
         }
 
         

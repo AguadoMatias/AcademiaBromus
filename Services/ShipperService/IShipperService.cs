@@ -4,16 +4,18 @@ namespace AcademiaBromus.Services.ShipperService
 {
     public interface IShipperService
     {
-        // QUE TIPO DE RETORNO USAR CUANDO UN METODO DEVUELVE NO CONTENT
-        Task<IEnumerable<Shipper>> ReadShippers();
-        Task<Shipper> ReadShipper(int id);
-        Task<List<Shipper>> UpdateShipper(int id, Shipper shipper);
+        Task<IEnumerable<Shipper>> GetShippers();
 
-        Task<List<Shipper>> CreateShipper(Shipper shipper);
+
+        Task<Shipper> GetShipper(int id);
+
+
+        Task<List<Shipper>> PutShipper(int id, Shipper shipper);
+
+
+        Task<List<Shipper>> PostShipper(Shipper shipper);
+
 
         Task DeleteShipper(int id);
-
-        
-
     }
 }

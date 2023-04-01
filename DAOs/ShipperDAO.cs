@@ -5,8 +5,7 @@ namespace AcademiaBromus.DAOs
 {
     public class ShipperDAO: IShipperDAO
     {
-        // SOLO EL DAO SERA RESPONSABLE DE INTERMEDIAR CON EL CONTEXTO DE LA BASE DE DATOS PARA EJECUTAR LAS OPERACIONES CRUD
-        // POR ESO SE GENERA ACA LA PROPIEDAD SOLO LECTURA DE NORTHWIND CONTEXT
+        
         private readonly NorthwindContext _context;
 
         public ShipperDAO(NorthwindContext context)
@@ -14,41 +13,37 @@ namespace AcademiaBromus.DAOs
             _context = context;
         }
 
-        public async Task<IEnumerable<Shipper>> SelectShippers()
+        public async Task<IEnumerable<Shipper>> GetShippers()
         {
             var shippers = await _context.Shippers.ToListAsync();
             return shippers;
         }
 
-        public async Task<Shipper?> SelectShipper(int id)
+        public async Task<Shipper?> GetShipper(int id)
         {
             var shipper = await _context.Shippers.FindAsync(id);          
             return shipper;
         }
 
-        public async Task<List<Shipper>?> UpdateShipper(int id, Shipper shipper)
+        public async Task<List<Shipper>?> PutShipper(int id, Shipper shipper)
         {
-            _context.Entry(shipper).State = EntityState.Modified;
-            try
+            if (ShipperExists(id))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ShipperExists(id))
+                _context.Entry(shipper).State = EntityState.Modified;
+                try
                 {
-                    return null;
+                    await _context.SaveChangesAsync();
                 }
-                else
-                {
-                    throw;
+                catch (DbUpdateConcurrencyException)
+                {                    
+                    throw;                    
                 }
-            }
+            }    
 
             return await _context.Shippers.ToListAsync();
         }
 
-        public async Task<List<Shipper>> InsertShipper(Shipper shipper)
+        public async Task<List<Shipper>> PostShipper(Shipper shipper)
         {
             _context.Shippers.Add(shipper);
             await _context.SaveChangesAsync();
@@ -58,12 +53,11 @@ namespace AcademiaBromus.DAOs
         public async Task DeleteShipper(int id)
         {
             var shipper = await _context.Shippers.FindAsync(id);
-            if (shipper != null)
+            if (_context.Shippers != null && shipper != null)
             {
                 _context.Shippers.Remove(shipper);
                 await _context.SaveChangesAsync();
-            }
-            
+            }            
         }
 
         private bool ShipperExists(int id)

@@ -20,6 +20,14 @@ builder.Services.AddDbContext<AcademiaBromus.Data.NorthwindContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString("NorthwindDB"));
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: "AllowOrigin", builder =>
+        {
+            builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        });
+});
 
 // Define la implementacion que se debe tomar para las Interfaces 
 builder.Services.AddScoped<IShipperService, ShipperService>();
@@ -38,6 +46,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseCors("AllowOrigin");
+
 app.MapControllers();
+
 
 app.Run();

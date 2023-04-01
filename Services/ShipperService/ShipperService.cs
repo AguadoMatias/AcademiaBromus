@@ -5,37 +5,36 @@ namespace AcademiaBromus.Services.ShipperService
 {
     public class ShipperService : IShipperService
     {
-        private readonly IShipperDAO _ishipperDAO;
+        private readonly IShipperDAO _iShipperDAO;
 
-        // LA CLASE SHIPPERSERVICE INYECTA LA DEPENDENCIA DE LA INTERFACE iDAO MEDIANTE EL USO DE UNA PROPIEDAD;
-        public ShipperService(IShipperDAO ishipperDAO)
+        public ShipperService(IShipperDAO iShipperDAO)
         {
-            _ishipperDAO = ishipperDAO;
-        }        
+            _iShipperDAO = iShipperDAO;
+        }
 
         Task IShipperService.DeleteShipper(int id)
         {            
-            return _ishipperDAO.DeleteShipper(id);
+            return _iShipperDAO.DeleteShipper(id);
         }
 
-        async Task<Shipper> IShipperService.ReadShipper(int id)
+        async Task<Shipper> IShipperService.GetShipper(int id)
         {
-            return await _ishipperDAO.SelectShipper(id);
+            return await _iShipperDAO.GetShipper(id);
         }
 
-        async Task<IEnumerable<Shipper>> IShipperService.ReadShippers()
+        async Task<IEnumerable<Shipper>> IShipperService.GetShippers()
         {
-            return await _ishipperDAO.SelectShippers();
+            return await _iShipperDAO.GetShippers();
         }
 
-        async Task<List<Shipper>> IShipperService.CreateShipper(Shipper shipper)
+        async Task<List<Shipper>> IShipperService.PostShipper(Shipper shipper)
         {
-            return await _ishipperDAO.InsertShipper(shipper);
+            return await _iShipperDAO.PostShipper(shipper);
         }
 
-        async Task<List<Shipper>> IShipperService.UpdateShipper(int id, Shipper shipper)
+        async Task<List<Shipper>> IShipperService.PutShipper(int id, Shipper shipper)
         {
-            return await _ishipperDAO.UpdateShipper(id, shipper);
+            return await _iShipperDAO.PutShipper(id, shipper);
         }
     }
 }

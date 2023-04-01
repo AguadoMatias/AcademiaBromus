@@ -3,16 +3,16 @@
 public interface IShipperDAO
 {
 
-    public Task<IEnumerable<Shipper>> SelectShippers();
+    public Task<IEnumerable<Shipper>> GetShippers();
 
 
-    public Task<Shipper?> SelectShipper(int id);
+    public Task<Shipper?> GetShipper(int id);
 
 
-    public Task<List<Shipper>?> UpdateShipper(int id, Shipper shipper);
+    public Task<List<Shipper>?> PutShipper(int id, Shipper shipper);
 
 
-    public Task<List<Shipper>> InsertShipper(Shipper shipper);
+    public Task<List<Shipper>> PostShipper(Shipper shipper);
 
 
     public Task DeleteShipper(int id);
