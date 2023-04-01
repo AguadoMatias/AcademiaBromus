@@ -23,7 +23,7 @@ public partial class NorthwindContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId); // Configura CustomerId como clave primaria
+            entity.HasKey(e => e.CustomerId); 
             entity.Property(e => e.CustomerId)
                 .ValueGeneratedOnAdd()
                 .IsRequired();

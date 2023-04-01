@@ -6,8 +6,8 @@ namespace AcademiaBromus.Services.CustomerService
     {
         Task<IEnumerable<Customer>> GetCustomers();
         Task<Customer> GetCustomer(string id);
-        Task<Customer> SetCustomer(Customer customer);
-        Task<Customer> UpdateCustomer(string id, Customer customer);
+        Task<Customer> PostCustomer(Customer customer);
+        Task<Customer> PutCustomer(string id, Customer customer);
         Task DeleteCustomer(string id);
 
 

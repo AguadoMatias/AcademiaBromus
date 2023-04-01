@@ -25,58 +25,95 @@ namespace AcademiaBromus.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            var customer = await _CustomerService.GetCustomers();
-            if (customer == null)
+            try
             {
-                return NotFound();
+                var customer = await _CustomerService.GetCustomers();
+                if (customer == null)
+                {
+                    return NotFound();
+                }
+                return Ok(customer);
             }
-            return Ok(customer);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(string id)
         {
-            var customer = await _CustomerService.GetCustomer(id);
-            if (customer == null)
+            try
             {
-                return NotFound();
+                var customer = await _CustomerService.GetCustomer(id);
+                if (customer == null)
+                {
+                    return NotFound();
+                }
+                return Ok(customer);
             }
-            return Ok(customer);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         
         [HttpPost]
-        public async Task<ActionResult<Customer>> SetCustomer(Customer customer)
+        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
-            var customers = await _CustomerService.SetCustomer(customer);
-            if (customers == null)
+            try
             {
-                return BadRequest();
+                var customers = await _CustomerService.PostCustomer(customer);
+                if (customers == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(customers);
             }
-            return Ok(customers);
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCustomer(string id, Customer customer)
+        public async Task<IActionResult> PutCustomer(string id, Customer customer)
         {
-            if (id != customer.CustomerId)
+            try
             {
-                return BadRequest();
-            }
+                if (id != customer.CustomerId)
+                {
+                    return BadRequest();
+                }
 
-            var updateCustomer = await _CustomerService.UpdateCustomer(id, customer);
-            if (updateCustomer == null)
-            {
-                return NoContent();
+                var putCustomer = await _CustomerService.PutCustomer(id, customer);
+                if (putCustomer == null)
+                {
+                    return NoContent();
+                }
+                return Ok();
             }
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(string id)
         {
-            await _CustomerService.DeleteCustomer(id);
-            return NoContent();
-
+            try
+            {
+                await _CustomerService.DeleteCustomer(id);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

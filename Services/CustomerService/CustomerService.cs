@@ -7,9 +7,9 @@ namespace AcademiaBromus.Services.CustomerService
     {
         private readonly ICustomerDAO _iCustomerDAO;
 
-        public CustomerService(ICustomerDAO icustomerDAO)
+        public CustomerService(ICustomerDAO iCustomerDAO)
         {
-            _iCustomerDAO = icustomerDAO;
+            _iCustomerDAO = iCustomerDAO;
         }
 
         async Task<Customer> ICustomerService.GetCustomer(string id)
@@ -20,13 +20,13 @@ namespace AcademiaBromus.Services.CustomerService
         {
             return await _iCustomerDAO.GetCustomers();
         }
-        async Task<Customer> ICustomerService.SetCustomer(Customer customer)
+        async Task<Customer> ICustomerService.PostCustomer(Customer customer)
         {
-            return await _iCustomerDAO.SetCustomer(customer);
+            return await _iCustomerDAO.PostCustomer(customer);
         }
-        async Task<Customer> ICustomerService.UpdateCustomer(string id, Customer customer)
+        async Task<Customer> ICustomerService.PutCustomer(string id, Customer customer)
         {
-            return await _iCustomerDAO.UpdateCustomer(id, customer);
+            return await _iCustomerDAO.PutCustomer(id, customer);
         }
         Task ICustomerService.DeleteCustomer(string id)
         {
