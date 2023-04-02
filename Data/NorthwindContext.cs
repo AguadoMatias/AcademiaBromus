@@ -27,7 +27,6 @@ public partial class NorthwindContext : DbContext
         modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasIndex(e => e.LastName, "LastName");
-
             entity.HasIndex(e => e.PostalCode, "PostalCode");
 
             entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
