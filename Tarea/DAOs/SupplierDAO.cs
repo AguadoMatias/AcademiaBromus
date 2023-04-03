@@ -31,7 +31,7 @@ namespace Tarea.DAOs
         {
             _context.Entry(supplier).State = EntityState.Modified;
             
-            if(!SupplierExists(id)) 
+            if(SupplierExists(id)) 
             {
                 try
                 {
