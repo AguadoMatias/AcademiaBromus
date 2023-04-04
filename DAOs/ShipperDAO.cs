@@ -50,14 +50,15 @@ namespace AcademiaBromus.DAOs
             return await _context.Shippers.ToListAsync();
         }
 
-        public async Task DeleteShipper(int id)
+        public async Task<List<Shipper?>> DeleteShipper(int id)
         {
             var shipper = await _context.Shippers.FindAsync(id);
             if (_context.Shippers != null && shipper != null)
             {
                 _context.Shippers.Remove(shipper);
                 await _context.SaveChangesAsync();
-            }            
+            }
+            return await _context.Shippers.ToListAsync();
         }
 
         private bool ShipperExists(int id)

@@ -12,7 +12,7 @@ namespace AcademiaBromus.Services.ShipperService
             _iShipperDAO = iShipperDAO;
         }
 
-        Task IShipperService.DeleteShipper(int id)
+        Task<List<Shipper>> IShipperService.DeleteShipper(int id)
         {            
             return _iShipperDAO.DeleteShipper(id);
         }

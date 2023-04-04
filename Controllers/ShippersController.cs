@@ -116,8 +116,8 @@ namespace AcademiaBromus.Controllers
         {
             try
             {
-                await _shipperService.DeleteShipper(id);
-                return NoContent();
+                var shippers = await _shipperService.DeleteShipper(id);
+                return Ok(shippers);
             }
             catch (Exception e)
             {

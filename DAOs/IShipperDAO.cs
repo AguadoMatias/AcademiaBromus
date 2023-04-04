@@ -15,6 +15,6 @@ public interface IShipperDAO
     public Task<List<Shipper>> PostShipper(Shipper shipper);
 
 
-    public Task DeleteShipper(int id);
+    public Task<List<Shipper>?> DeleteShipper(int id);
     
 }

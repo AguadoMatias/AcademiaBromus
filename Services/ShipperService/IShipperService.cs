@@ -16,6 +16,6 @@ namespace AcademiaBromus.Services.ShipperService
         Task<List<Shipper>> PostShipper(Shipper shipper);
 
 
-        Task DeleteShipper(int id);
+        Task<List<Shipper>> DeleteShipper(int id);
     }
 }
